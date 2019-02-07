@@ -13,14 +13,14 @@ namespace IPWPrototype.Views
     {
         public Item Item { get; set; }
 
-        public NewItemPage()
+        public NewItemPage(string text)
         {
             InitializeComponent();
 
             Item = new Item
             {
-                Text = "Item name",
-                Description = "This is an item description."
+                Text = text,
+                Description = string.Empty
             };
 
             BindingContext = this;
