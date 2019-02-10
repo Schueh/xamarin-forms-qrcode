@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IPWPrototype.Views;
+using IPWPrototype.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace IPWPrototype
@@ -13,6 +14,7 @@ namespace IPWPrototype
         {
             InitializeComponent();
 
+            DependencyService.Register<SQLiteDataStore>();
 
             MainPage = new MainPage();
         }

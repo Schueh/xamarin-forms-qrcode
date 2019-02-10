@@ -42,6 +42,13 @@ namespace IPWPrototype.Views
             await Navigation.PushModalAsync(new NavigationPage(new NewItemPage("Item name")));
         }
 
+        // FIXME: command binding in context menu doesn't seem to work.
+        void DeleteItem_Clicked(object sender, EventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            ((ItemsViewModel)BindingContext).DeleteItemCommand.Execute(menuItem.CommandParameter);
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

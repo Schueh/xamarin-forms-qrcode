@@ -14,12 +14,16 @@ namespace IPWPrototype.ViewModels
     {
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
+        public Command<Item> DeleteItemCommand { get; set; }
 
         public ItemsViewModel()
         {
             Title = "Browse";
             Items = new ObservableCollection<Item>();
+
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+
+            DeleteItemCommand = new Command<Item>(async (item) => await ExecuteDeleteItemCommand(item));
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
@@ -27,6 +31,15 @@ namespace IPWPrototype.ViewModels
                 Items.Add(newItem);
                 await DataStore.AddItemAsync(newItem);
             });
+        }
+
+        async Task ExecuteDeleteItemCommand(Item item)
+        {
+            bool deleted = await DataStore.DeleteItemAsync(item.Id);
+            if (deleted)
+            {
+                Items.Remove(item);
+            }
         }
 
         async Task ExecuteLoadItemsCommand()
